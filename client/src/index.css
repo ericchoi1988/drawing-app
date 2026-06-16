@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Drawing app — clean, dark creative tool palette */
+    --background: 220 15% 10%;
+    --foreground: 220 10% 92%;
+
+    --card: 220 15% 13%;
+    --card-foreground: 220 10% 92%;
+
+    --popover: 220 15% 13%;
+    --popover-foreground: 220 10% 92%;
+
+    --primary: 210 100% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 220 10% 80%;
+
+    --muted: 220 12% 18%;
+    --muted-foreground: 220 8% 55%;
+
+    --accent: 210 100% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 12% 20%;
+    --input: 220 12% 18%;
+    --ring: 210 100% 60%;
+
+    --radius: 0.5rem;
+
+    /* Tool panel */
+    --panel-bg: 220 18% 12%;
+    --panel-border: 220 12% 22%;
+    --tool-active: 210 100% 60%;
+    --canvas-bg: 0 0% 100%;
+
+    /* Sidebar width */
+    --sidebar-width: 72px;
+    --top-bar-height: 52px;
+  }
+
+  /* Drawing tool color swatches */
+  :root {
+    --swatch-1: #1a1a1a;
+    --swatch-2: #ffffff;
+    --swatch-3: #ef4444;
+    --swatch-4: #f97316;
+    --swatch-5: #eab308;
+    --swatch-6: #22c55e;
+    --swatch-7: #3b82f6;
+    --swatch-8: #8b5cf6;
+    --swatch-9: #ec4899;
+    --swatch-10: #14b8a6;
+    --swatch-11: #6b7280;
+    --swatch-12: #92400e;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    height: 100dvh;
+    width: 100dvw;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  #root {
+    height: 100dvh;
+    width: 100dvw;
+    overflow: hidden;
+  }
+}
+
+/* Canvas cursor */
+.canvas-draw { cursor: crosshair; }
+.canvas-erase { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='3' fill='white' stroke='%23999' stroke-width='1.5'/%3E%3C/svg%3E") 12 12, auto; }
+
+/* Touch pan mode */
+.canvas-pan { cursor: grab; }
+.canvas-pan:active { cursor: grabbing; }
+
+/* Tool button styles */
+.tool-btn {
+  @apply flex items-center justify-center rounded-xl transition-all duration-150;
+  width: 44px;
+  height: 44px;
+}
+.tool-btn:hover { @apply bg-secondary; }
+.tool-btn.active { background: hsl(var(--tool-active) / 0.2); color: hsl(var(--tool-active)); }
+
+/* Color swatch */
+.color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s, border-color 0.1s;
+  flex-shrink: 0;
+}
+.color-swatch:hover { transform: scale(1.15); }
+.color-swatch.selected { border-color: hsl(var(--primary)); transform: scale(1.15); }
+
+/* Slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: hsl(var(--muted));
+  border-radius: 2px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  cursor: pointer;
+}
+
+/* Scrollbar for gallery */
+.gallery-scroll::-webkit-scrollbar { width: 4px; }
+.gallery-scroll::-webkit-scrollbar-track { background: transparent; }
+.gallery-scroll::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 2px; }
+
+/* Opacity slider background gradient */
+.opacity-slider-bg {
+  background: linear-gradient(to right, transparent, currentColor);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeIn 0.15s ease; }
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
