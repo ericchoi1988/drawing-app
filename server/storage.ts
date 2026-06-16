@@ -2,8 +2,12 @@ import { drizzle } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3";
 import { drawings, type Drawing, type InsertDrawing } from "@shared/schema";
 import { eq, desc } from "drizzle-orm";
+import path from "path";
 
-const sqlite = new Database("data.db");
+// Use DATABASE_URL env var if set (Docker volume), otherwise fall back to local data.db
+const dbPath = process.env.DATABASE_URL || path.join(process.cwd(), "data.db");
+
+const sqlite = new Database(dbPath);
 const db = drizzle(sqlite);
 
 // Create tables
